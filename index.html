@@ -157,6 +157,18 @@ details.pass summary:hover{color:var(--brand)}
 details.pass .inner{margin-top:8px;background:#f8fafc;border-radius:10px;padding:12px;white-space:pre-line;font-size:12px;color:var(--muted);line-height:1.65;max-height:200px;overflow-y:auto}
 .fade-in{animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- SUPPORT (DONASI) ---------- */
+#support-btn{position:fixed;right:18px;bottom:86px;z-index:40;width:52px;height:52px;border-radius:50%;background:var(--grad);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(99,102,241,.45);transition:.25s}
+#support-btn:hover{transform:scale(1.08);box-shadow:0 12px 30px rgba(99,102,241,.55)}
+#support-modal{position:fixed;inset:0;z-index:60;background:rgba(15,23,42,.55);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px}
+#support-modal.hidden{display:none!important}
+.support-card{background:var(--card);border-radius:22px;max-width:360px;width:100%;padding:26px 22px;text-align:center;box-shadow:0 24px 60px rgba(15,23,42,.3);animation:fade .3s ease;max-height:90vh;overflow-y:auto}
+.support-card h3{font-size:18px;font-weight:800;margin-bottom:4px}
+.support-card .sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+.support-card img{width:100%;max-width:280px;border-radius:14px;border:1px solid var(--line);margin-bottom:14px}
+.support-card .nmid{font-size:11px;color:var(--faint);background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:8px 10px;word-break:break-all}
+.support-card .close{margin-top:16px;border-radius:12px;padding:10px 20px;background:var(--grad);color:#fff;font-weight:700;font-size:14px;width:100%}
 @media(max-width:520px){.navgrid{grid-template-columns:repeat(8,1fr)}.stat3 .st b{font-size:20px}}
 </style>
 </head>
@@ -206,6 +218,21 @@ details.pass .inner{margin-top:8px;background:#f8fafc;border-radius:10px;padding
 
 <!-- ================= RESULT ================= -->
 <div id="result" class="wrap hidden"></div>
+
+<!-- ================= SUPPORT ================= -->
+<button id="support-btn" onclick="openSupport()" title="Dukung aplikasi ini">☕</button>
+<div id="support-modal" class="hidden" onclick="if(event.target===this)closeSupport()">
+  <div class="support-card">
+    <h3>Dukung Pengembangan 🙏</h3>
+    <p class="sub">Aplikasi ini gratis. Scan QRIS di bawah jika ingin mendukung pengembang.</p>
+    <img src="qris-donasi.jpg" alt="QRIS Donasi" onerror="this.style.display='none';document.getElementById('qr-err').style.display='block'">
+    <p id="qr-err" style="display:none;font-size:13px;color:var(--bad);background:var(--bad-bg);border:1px solid var(--bad-line);border-radius:10px;padding:12px">
+      Gambar QRIS belum tersedia. Pastikan file <b>qris-donasi.jpg</b> sudah di-upload ke folder yang sama dengan index.html di GitHub.
+    </p>
+    <div class="nmid">NMID: ID1022233781080<br>BOOKS AND JOURNAL</div>
+    <button class="close" onclick="closeSupport()">Tutup</button>
+  </div>
+</div>
 
 <script>
 const PASSAGES = {
@@ -552,6 +579,10 @@ const SUBTES = [
   },
 ];
 const HURUF = ["A","B","C","D","E"];
+
+// ---------- SUPPORT ----------
+function openSupport(){ $("support-modal").classList.remove("hidden"); }
+function closeSupport(){ $("support-modal").classList.add("hidden"); }
 let sub = null, idx = 0, answers = {}, flags = {}, timeLeft = 0, timerId = null, showNav = false;
 
 const $ = (id) => document.getElementById(id);
